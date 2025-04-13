@@ -38,7 +38,7 @@ const store = new mongoDBStore({
 app.use(session({
     secret: 'this is scret',
     resave: false,
-    saveUninitialized: true, 
+    saveUninitialized: false, 
     store:store 
  }))
 
@@ -98,6 +98,15 @@ app.use(session({
         }
         req.session.isAuthenticated = true
         res.redirect('/dashboard')
+    })
+
+    app.post('/logout',(req,res) => {
+        req.session.destroy((err) => {
+            if (err) throw err;
+            res.redirect('/signup')
+        }
+           
+        )
     })
 
 app.listen(PORT, () => {
